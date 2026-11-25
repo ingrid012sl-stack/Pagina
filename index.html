@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tlapalería - Herramientas y Materiales</title>
+    <!-- Tailwind CSS para el diseño responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome para iconos ilustrativos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fuente Google Fonts 'Inter' -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        /* Paleta de colores solicitada: Azul oscuro, Naranja, Blanco y Gris */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        azulOscuro: '#0F2537',
+                        azulMedio: '#1E3A5F',
+                        naranja: '#F97316',
+                        naranjaOscuro: '#EA580C',
+                        grisFondo: '#F3F4F6',
+                        grisTexto: '#6B7280'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #E5E7EB;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Ocultar barras de scroll manteniendo desplazamiento */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Transición suave al cambiar de ventana */
+        .vista-pantalla {
+            animation: aparecer 0.2s ease-out;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Patrón visual estático de calles para el mapa en V.2 */
+        .mapa-estatico {
+            background-color: #E5E7EB;
+            background-image: 
+                linear-gradient(to right, #FFFFFF 4px, transparent 4px),
+                linear-gradient(to bottom, #FFFFFF 4px, transparent 4px),
+                linear-gradient(45deg, transparent 47%, #D1D5DB 48%, #D1D5DB 52%, transparent 53%);
+            background-size: 55px 55px, 55px 55px, 110px 110px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center md:py-6 px-2">
+
+    <!-- ========================================================================= -->
+    <!-- CONTENEDOR PRINCIPAL DE LA APLICACIÓN                                     -->
+    <!-- ========================================================================= -->
+    <div class="w-full max-w-md bg-grisFondo min-h-[780px] rounded-3xl shadow-2xl overflow-hidden flex flex-col relative border border-gray-300">
+
+        <!-- ENCABEZADO GLOBAL: Logotipo de la Tlapalería -->
+        <header class="bg-gradient-to-r from-azulOscuro to-azulMedio text-white p-5 rounded-b-3xl shadow-md z-10">
+            <div class="flex items-center justify-between">
+                <div onclick="cambiarVista('inicio')" class="flex items-center gap-3 cursor-pointer">
+                    <div class="w-12 h-12 bg-naranja rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3">
+                        <i class="fa-solid fa-hammer text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-extrabold tracking-wide leading-tight">TLAPALERÍA</h1>
+                        <p class="text-xs text-orange-300 font-medium">Herramientas y materiales</p>
+                    </div>
+                </div>
+                <!-- Acceso directo visual a V.3 Configuración -->
+                <button onclick="cambiarVista('configuracion')" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition" title="Ir a Configuración">
+                    <i class="fa-solid fa-gear text-white text-lg"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTENIDO DE LAS 5 VENTANAS -->
+        <main class="flex-1 overflow-y-auto pb-24 px-4 pt-4 no-scrollbar">
+
+            <!-- ================================================================= -->
+            <!-- VENTANA 1: V.1 INICIO (Pantalla principal)                        -->
+            <!-- ================================================================= -->
+            <section id="vista-inicio" class="vista-pantalla space-y-5">
+                
+                <!-- Buscador estático -->
+                <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-200">
+                    <label class="block text-xs font-bold text-azulOscuro mb-1.5 ml-1">¿Qué estás buscando?</label>
+                    <div class="relative flex items-center">
+                        <i class="fa-solid fa-magnifying-glass text-naranja absolute left-3.5"></i>
+                        <input type="text" placeholder="Busca productos..." 
+                               class="w-full bg-grisFondo text-sm text-gray-700 pl-10 pr-4 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-naranja">
+                    </div>
+                </div>
+
+                <!-- Cuadrícula de 6 categorías (Al dar clic llevan a B.2 Catálogo) -->
+                <div>
+                    <div class="flex justify-between items-center mb-2.5">
+                        <h2 class="text-base font-bold text-azulOscuro">Categorías</h2>
+                        <button onclick="cambiarVista('catalogo')" class="text-xs font-semibold text-naranja hover:underline">
+                            Ver más
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-3">
+                        <!-- 1. Herramientas -->
+                        <button onclick="cambiarVista('catalogo')" class="bg-white p-3 rounded-2xl shadow-sm hover:shadow-md border border-gray-100 flex flex-col items-center justify-center gap-2 transition">
+                            <div class="w-11 h-11 rounded-xl bg-orange-100 text-naranja flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-wrench"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-azulOscuro text-center">Herramientas</span>
+                        </button>
+
+                        <!-- 2. Pinturas -->
+                        <button onclick="cambiarVista('catalogo')" class="bg-white p-3 rounded-2xl shadow-sm hover:shadow-md border border-gray-100 flex flex-col items-center justify-center gap-2 transition">
+                            <div class="w-11 h-11 rounded-xl bg-blue-100 text-azulMedio flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-paint-roller"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-azulOscuro text-center">Pinturas</span>
+                        </button>
+
+                        <!-- 3. Plomería -->
+                        <button onclick="cambiarVista('catalogo')" class="bg-white p-3 rounded-2xl shadow-sm hover:shadow-md border border-gray-100 flex flex-col items-center justify-center gap-2 transition">
+                            <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-faucet-drip"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-azulOscuro text-center">Plomería</span>
+                        </button>
+
+                        <!-- 4. Electricidad -->
+                        <button onclick="cambiarVista('catalogo')" class="bg-white p-3 rounded-2xl shadow-sm hover:shadow-md border border-gray-100 flex flex-col items-center justify-center gap-2 transition">
+                            <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-azulOscuro text-center">Electricidad</span>
+                        </button>
+
+                        <!-- 5. Tornillería -->
+                        <button onclick="cambiarVista('catalogo')" class="bg-white p-3 rounded-2xl shadow-sm hover:shadow-md border border-gray-100 flex flex-col items-center justify-center gap-2 transition">
+                            <div class="w-11 h-11 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-screwdriver"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-azulOscuro text-center">Tornillería</span>
+                        </button>
+
+                        <!-- 6. Materiales -->
+                        <button onclick="cambiarVista('catalogo')" class="bg-white p-3 rounded-2xl shadow-sm hover:shadow-md border border-gray-100 flex flex-col items-center justify-center gap-2 transition">
+                            <div class="w-11 h-11 rounded-xl bg-orange-50 text-naranjaOscuro flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-trowel-bricks"></i>
+                            </div>
+                            <span class="text-xs font-semibold text-azulOscuro text-center">Materiales</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sección: PRODUCTOS DESTACADOS (Estática con los 3 productos exactos) -->
+                <div>
+                    <h2 class="text-base font-extrabold text-azulOscuro uppercase tracking-wide mb-3">
+                        PRODUCTOS DESTACADOS
+                    </h2>
+
+                    <div class="grid grid-cols-3 gap-2.5">
+                        <!-- Producto Destacado 1 -->
+                        <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                            <div class="w-full h-20 bg-orange-100 rounded-xl flex items-center justify-center mb-2">
+                                <i class="fa-solid fa-hammer text-naranja text-3xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xs text-azulOscuro leading-tight">Martillo de Garra</h3>
+                            <p class="text-sm font-extrabold text-naranja mt-1">$199.00</p>
+                        </div>
+
+                        <!-- Producto Destacado 2 -->
+                        <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                            <div class="w-full h-20 bg-blue-100 rounded-xl flex items-center justify-center mb-2">
+                                <i class="fa-solid fa-fill-drip text-azulMedio text-3xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xs text-azulOscuro leading-tight">Lata de Pintura</h3>
+                            <p class="text-sm font-extrabold text-naranja mt-1">$350.00</p>
+                        </div>
+
+                        <!-- Producto Destacado 3 -->
+                        <div class="bg-white p-3 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                            <div class="w-full h-20 bg-gray-200 rounded-xl flex items-center justify-center mb-2">
+                                <i class="fa-solid fa-screwdriver-wrench text-azulOscuro text-3xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xs text-azulOscuro leading-tight">Juego de Llaves</h3>
+                            <p class="text-sm font-extrabold text-naranja mt-1">$550.00</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ================================================================= -->
+            <!-- VENTANA 2: V.2 UBICACIÓN                                          -->
+            <!-- ================================================================= -->
+            <section id="vista-ubicacion" class="vista-pantalla hidden space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="bg-naranja text-white text-xs font-bold px-2.5 py-1 rounded-lg">V.2</span>
+                    <h2 class="text-lg font-extrabold text-azulOscuro">Ubicación</h2>
+                </div>
+
+                <!-- Mapa ilustrativo estático -->
+                <div class="relative w-full h-52 rounded-2xl overflow-hidden shadow-sm border-2 border-white mapa-estatico flex flex-col items-center justify-center p-4 text-center">
+                    <div class="w-12 h-12 bg-naranja rounded-full flex items-center justify-center shadow-lg border-4 border-white mb-2">
+                        <i class="fa-solid fa-location-dot text-white text-xl"></i>
+                    </div>
+                    <div class="bg-white/95 px-3.5 py-2 rounded-xl shadow-sm border border-gray-200">
+                        <p class="text-xs font-bold text-azulOscuro">Mapa de ubicación</p>
+                        <p class="text-[11px] text-grisTexto">Aquí se mostrará la ubicación del negocio</p>
+                    </div>
+                </div>
+
+                <!-- Información de establecimiento -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+                    <h3 class="font-bold text-azulOscuro text-base border-b border-gray-100 pb-2">
+                        Información de establecimiento
+                    </h3>
+
+                    <!-- Dirección -->
+                    <div class="flex items-start gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-orange-100 text-naranja flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-map-pin"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-grisTexto uppercase">Dirección:</p>
+                            <p class="text-sm font-semibold text-azulOscuro">Calle Hidalgo #124, Col. Centro, Ciudad de México</p>
+                        </div>
+                    </div>
+
+                    <!-- Horario -->
+                    <div class="flex items-start gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-blue-100 text-azulOscuro flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-grisTexto uppercase">Horario:</p>
+                            <p class="text-sm font-semibold text-azulOscuro">Lunes a Sábado: 8:00 am - 6:00 pm</p>
+                        </div>
+                    </div>
+
+                    <!-- Contacto -->
+                    <div class="flex items-start gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-gray-100 text-azulOscuro flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-grisTexto uppercase">Contacto:</p>
+                            <p class="text-sm font-semibold text-azulOscuro">+52 55 1234 5678</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón funcional de navegación: REGRESAR AL INICIO -->
+                <button onclick="cambiarVista('inicio')" class="w-full bg-azulOscuro hover:bg-azulMedio text-white font-bold py-3.5 rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> REGRESAR AL INICIO
+                </button>
+            </section>
+
+
+            <!-- ================================================================= -->
+            <!-- VENTANA 3: V.3 CONFIGURACIÓN                                      -->
+            <!-- ================================================================= -->
+            <section id="vista-configuracion" class="vista-pantalla hidden space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="bg-naranja text-white text-xs font-bold px-2.5 py-1 rounded-lg">V.3</span>
+                    <h2 class="text-lg font-extrabold text-azulOscuro">CONFIGURACIÓN</h2>
+                </div>
+
+                <!-- Lista de opciones estáticas del boceto -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 divide-y divide-gray-100 overflow-hidden">
+                    
+                    <!-- 1. Perfil del usuario -->
+                    <div class="p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-10 h-10 rounded-xl bg-blue-100 text-azulOscuro flex items-center justify-center">
+                                <i class="fa-regular fa-user text-lg"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Perfil del usuario</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </div>
+
+                    <!-- 2. Notificaciones -->
+                    <div class="p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-10 h-10 rounded-xl bg-orange-100 text-naranja flex items-center justify-center">
+                                <i class="fa-regular fa-bell text-lg"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Notificaciones</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </div>
+
+                    <!-- 3. Privacidad y Seguridad -->
+                    <div class="p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-10 h-10 rounded-xl bg-gray-100 text-azulOscuro flex items-center justify-center">
+                                <i class="fa-solid fa-shield-halved text-lg"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Privacidad y Seguridad</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </div>
+
+                    <!-- 4. Información de la aplicación -->
+                    <div class="p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-10 h-10 rounded-xl bg-orange-50 text-naranjaOscuro flex items-center justify-center">
+                                <i class="fa-solid fa-circle-info text-lg"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Información de la aplicación</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- Botón funcional de navegación: REGRESAR AL INICIO -->
+                <button onclick="cambiarVista('inicio')" class="w-full bg-azulOscuro hover:bg-azulMedio text-white font-bold py-3.5 rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> REGRESAR AL INICIO
+                </button>
+            </section>
+
+
+            <!-- ================================================================= -->
+            <!-- VENTANA 4: B.1 COMPRAR                                            -->
+            <!-- ================================================================= -->
+            <section id="vista-comprar" class="vista-pantalla hidden space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="bg-naranja text-white text-xs font-bold px-2.5 py-1 rounded-lg">B.1</span>
+                    <h2 class="text-lg font-extrabold text-azulOscuro">COMPRAR</h2>
+                </div>
+
+                <p class="text-xs font-bold text-grisTexto uppercase tracking-wider">Productos seleccionados</p>
+
+                <!-- Lista fija exacta de los 3 productos del boceto -->
+                <div class="space-y-2.5">
+                    <!-- Martillo $120.00 -->
+                    <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 bg-orange-100 text-naranja rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-hammer text-lg"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Martillo</span>
+                        </div>
+                        <span class="font-extrabold text-sm text-azulOscuro">$120.00</span>
+                    </div>
+
+                    <!-- Brocha $45.00 -->
+                    <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 bg-blue-100 text-azulMedio rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-paintbrush text-lg"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Brocha</span>
+                        </div>
+                        <span class="font-extrabold text-sm text-azulOscuro">$45.00</span>
+                    </div>
+
+                    <!-- Desarmador $65.00 -->
+                    <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 bg-gray-200 text-azulOscuro rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-screwdriver text-lg"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Desarmador</span>
+                        </div>
+                        <span class="font-extrabold text-sm text-azulOscuro">$65.00</span>
+                    </div>
+                </div>
+
+                <!-- Resumen fijo: Carrito de compras Total: $230.00 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 space-y-3">
+                    <div class="flex justify-between items-center border-b border-gray-100 pb-3">
+                        <span class="text-sm font-bold text-azulOscuro">Carrito de compras Total:</span>
+                        <span class="text-2xl font-extrabold text-naranja">$230.00</span>
+                    </div>
+
+                    <!-- Botón puramente estático -->
+                    <button type="button" class="w-full bg-naranja hover:bg-naranjaOscuro text-white font-extrabold py-3.5 rounded-xl shadow-md transition cursor-default">
+                        CONTINUAR COMPRA
+                    </button>
+
+                    <p class="text-xs text-center text-grisTexto font-medium">
+                        Datos del cliente, dirección de entrega y forma de pago
+                    </p>
+                </div>
+            </section>
+
+
+            <!-- ================================================================= -->
+            <!-- VENTANA 5: B.2 VER MÁS (Catálogo de productos)                    -->
+            <!-- ================================================================= -->
+            <section id="vista-catalogo" class="vista-pantalla hidden space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="bg-naranja text-white text-xs font-bold px-2.5 py-1 rounded-lg">B.2</span>
+                    <h2 class="text-lg font-extrabold text-azulOscuro">CATÁLOGO DE PRODUCTOS</h2>
+                </div>
+
+                <!-- Buscador estático -->
+                <div class="relative flex items-center">
+                    <i class="fa-solid fa-magnifying-glass text-naranja absolute left-3.5"></i>
+                    <input type="text" placeholder="Busca un producto..." 
+                           class="w-full bg-white text-sm text-gray-700 pl-10 pr-4 py-3 rounded-2xl shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-naranja">
+                </div>
+
+                <!-- Lista vertical de categorías con flecha '>' -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 divide-y divide-gray-100 overflow-hidden">
+                    <div class="p-3.5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-orange-100 text-naranja flex items-center justify-center">
+                                <i class="fa-solid fa-wrench"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Herramientas</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                    </div>
+
+                    <div class="p-3.5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-orange-50 text-naranjaOscuro flex items-center justify-center">
+                                <i class="fa-solid fa-trowel-bricks"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Materiales de construcción</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                    </div>
+
+                    <div class="p-3.5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center">
+                                <i class="fa-solid fa-faucet-drip"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Plomería</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                    </div>
+
+                    <div class="p-3.5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Electricidad</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                    </div>
+
+                    <div class="p-3.5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-blue-100 text-azulMedio flex items-center justify-center">
+                                <i class="fa-solid fa-paint-roller"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Pinturas</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                    </div>
+
+                    <div class="p-3.5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-gray-200 text-gray-700 flex items-center justify-center">
+                                <i class="fa-solid fa-screwdriver"></i>
+                            </div>
+                            <span class="font-bold text-sm text-azulOscuro">Tornillería</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- Nota inferior exacta del boceto -->
+                <div class="bg-blue-50 border border-blue-200 p-3.5 rounded-2xl text-center">
+                    <p class="text-xs font-medium text-azulOscuro">
+                        Cada producto mostrará su imagen, nombre, descripción, precio y disponibilidad
+                    </p>
+                </div>
+
+                <!-- Botón funcional de navegación: REGRESAR AL INICIO -->
+                <button onclick="cambiarVista('inicio')" class="w-full bg-azulOscuro hover:bg-azulMedio text-white font-bold py-3.5 rounded-2xl shadow-md transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> REGRESAR AL INICIO
+                </button>
+            </section>
+
+        </main>
+
+        <!-- ===================================================================== -->
+        <!-- BARRA DE NAVEGACIÓN INFERIOR (Inicio, Ubicación, Comprar, Más)        -->
+        <!-- ===================================================================== -->
+        <nav class="bg-white border-t border-gray-200 px-2 py-2.5 flex justify-around items-center absolute bottom-0 w-full z-20">
+            
+            <!-- Inicio -> V.1 Inicio -->
+            <button onclick="cambiarVista('inicio')" id="nav-inicio" class="nav-inferior flex flex-col items-center justify-center w-16 py-1 rounded-xl text-naranja font-bold transition">
+                <i class="fa-solid fa-house text-lg mb-0.5"></i>
+                <span class="text-[11px]">Inicio</span>
+            </button>
+
+            <!-- Ubicación -> V.2 Ubicación -->
+            <button onclick="cambiarVista('ubicacion')" id="nav-ubicacion" class="nav-inferior flex flex-col items-center justify-center w-16 py-1 rounded-xl text-grisTexto hover:text-azulOscuro font-medium transition">
+                <i class="fa-solid fa-location-dot text-lg mb-0.5"></i>
+                <span class="text-[11px]">Ubicación</span>
+            </button>
+
+            <!-- Comprar -> B.1 Comprar -->
+            <button onclick="cambiarVista('comprar')" id="nav-comprar" class="nav-inferior flex flex-col items-center justify-center w-16 py-1 rounded-xl text-grisTexto hover:text-azulOscuro font-medium transition">
+                <i class="fa-solid fa-cart-shopping text-lg mb-0.5"></i>
+                <span class="text-[11px]">Comprar</span>
+            </button>
+
+            <!-- Más -> V.3 Configuración -->
+            <button onclick="cambiarVista('configuracion')" id="nav-configuracion" class="nav-inferior flex flex-col items-center justify-center w-16 py-1 rounded-xl text-grisTexto hover:text-azulOscuro font-medium transition">
+                <i class="fa-solid fa-ellipsis text-lg mb-0.5"></i>
+                <span class="text-[11px]">Más</span>
+            </button>
+
+        </nav>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT ÚNICAMENTE PARA NAVEGAR ENTRE LAS 5 VENTANAS                   -->
+    <!-- ========================================================================= -->
+    <script>
+        function cambiarVista(nombreVista) {
+            const vistas = ['inicio', 'ubicacion', 'configuracion', 'comprar', 'catalogo'];
+
+            // 1. Ocultar todas las pantallas y mostrar solo la elegida
+            vistas.forEach(vista => {
+                const elementoVista = document.getElementById(`vista-${vista}`);
+                if (elementoVista) {
+                    elementoVista.classList.add('hidden');
+                }
+            });
+            document.getElementById(`vista-${nombreVista}`).classList.remove('hidden');
+
+            // 2. Actualizar estado activo de la barra inferior
+            document.querySelectorAll('.nav-inferior').forEach(btn => {
+                btn.classList.remove('text-naranja', 'font-bold');
+                btn.classList.add('text-grisTexto', 'font-medium');
+            });
+            const navActivo = document.getElementById(`nav-${nombreVista}`);
+            if (navActivo) {
+                navActivo.classList.remove('text-grisTexto', 'font-medium');
+                navActivo.classList.add('text-naranja', 'font-bold');
+            }
+        }
+    </script>
+</body>
+</html>
